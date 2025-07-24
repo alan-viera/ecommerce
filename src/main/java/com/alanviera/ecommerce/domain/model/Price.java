@@ -1,10 +1,12 @@
 package com.alanviera.ecommerce.domain.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Getter
 @AllArgsConstructor
 public class Price {
     private final Long productId;
