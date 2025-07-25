@@ -40,6 +40,25 @@ public class PriceQueryUseCaseImplTest {
 
         assertTrue(result.isEmpty());
     }
+
+    @DisplayName("Single price in repository -> Return that price")
+    @Test
+    void getPrice_returnSinglePrice() {
+        LocalDateTime now = LocalDateTime.now();
+
+        List<Price> prices = List.of(
+                new Price(1L, 1L, 2L, now, now.plusHours(1), (byte) 1, new BigDecimal("30.00"), "EUR")
+        );
+
+        when(priceRepositoryPort.findPricesByDateAndProductAndBrand(now, 1L, 1L)).thenReturn(prices);
+
+        Optional<Price> result = priceQueryUseCase.getPrice(now, 1L, 1L);
+
+        assertTrue(result.isPresent());
+        assertEquals((byte) 1, result.get().getPriority());
+        assertEquals(new BigDecimal("30.00"), result.get().getPrice());
+    }
+
     @DisplayName("More than one price with different priority in repository -> Return highest priority price")
     @Test
     void getPrice_returnPriceWithHighestPriority() {
