@@ -2,6 +2,7 @@ package com.alanviera.ecommerce.application.service;
 
 import com.alanviera.ecommerce.domain.model.Price;
 import com.alanviera.ecommerce.domain.port.out.PriceRepositoryPort;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,20 @@ public class PriceQueryUseCaseImplTest {
     @InjectMocks
     private PriceQueryUseCaseImpl priceQueryUseCase;
 
+    @DisplayName("No prices in repository -> Return empty result")
+    @Test
+    void getPrice_noPrices_noResult() {
+        LocalDateTime now = LocalDateTime.now();
+
+        List<Price> prices = Collections.emptyList();
+
+        when(priceRepositoryPort.findPricesByDateAndProductAndBrand(now, 1L, 1L)).thenReturn(prices);
+
+        Optional<Price> result = priceQueryUseCase.getPrice(now, 1L, 1L);
+
+        assertTrue(result.isEmpty());
+    }
+    @DisplayName("More than one price with different priority in repository -> Return highest priority price")
     @Test
     void getPrice_returnPriceWithHighestPriority() {
         LocalDateTime now = LocalDateTime.now();
