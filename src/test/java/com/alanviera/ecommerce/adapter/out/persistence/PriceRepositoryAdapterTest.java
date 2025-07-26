@@ -43,6 +43,8 @@ public class PriceRepositoryAdapterTest {
         price1.setPriority(1);
         price1.setPrice(priceValue);
         price1.setCurrency("EUR");
+        price1.setLastUpdate(LocalDateTime.of(2020, 1, 1, 10, 0));
+        price1.setLastUpdateBy("user1");
         priceRepository.save(price1);
 
         PriceEntity price2 = new PriceEntity();
@@ -54,6 +56,8 @@ public class PriceRepositoryAdapterTest {
         price2.setPriority(1);
         price2.setPrice(new BigDecimal("99.50"));
         price2.setCurrency("EUR");
+        price1.setLastUpdate(LocalDateTime.of(2020, 1, 1, 10, 0));
+        price1.setLastUpdateBy("user1");
         priceRepository.save(price2);
 
         LocalDateTime queryDate = LocalDateTime.of(2020, 1, 5, 11, 0);

@@ -37,4 +37,10 @@ public class PriceEntity {
 
     @Column(name = "currency")
     private String currency;
+
+    @Column(name = "last_update")
+    private LocalDateTime lastUpdate;
+
+    @Column(name = "last_update_by")
+    private String lastUpdateBy;
 }
