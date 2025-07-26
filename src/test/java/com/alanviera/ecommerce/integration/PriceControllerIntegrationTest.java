@@ -32,7 +32,10 @@ class PriceControllerIntegrationTest {
     static Stream<TestCase> providePriceScenarios() {
         return Stream.of(
                 new TestCase(
-                        new PriceRequestDto(LocalDateTime.of(2020, 6, 14, 10, 0), 35455L, 1L),
+                        new PriceRequestDto(
+                                LocalDateTime.of(2020, 6, 14, 10, 0),
+                                35455L,
+                                1L),
                         new PriceResponseDto(
                                 35455L,
                                 1L,
@@ -40,6 +43,62 @@ class PriceControllerIntegrationTest {
                                 LocalDateTime.of(2020, 6, 14, 0, 0, 0),
                                 LocalDateTime.of(2020, 12, 31, 23, 59, 59),
                                 new BigDecimal("35.50"),
+                                "EUR")
+                ),
+                new TestCase(
+                        new PriceRequestDto(
+                                LocalDateTime.of(2020, 6, 14, 16, 0),
+                                35455L,
+                                1L),
+                        new PriceResponseDto(
+                                35455L,
+                                1L,
+                                2L,
+                                LocalDateTime.of(2020, 6, 14, 15, 0, 0),
+                                LocalDateTime.of(2020, 6, 14, 18, 30, 0),
+                                new BigDecimal("25.45"),
+                                "EUR")
+                ),
+                new TestCase(
+                        new PriceRequestDto(
+                                LocalDateTime.of(2020, 6, 14, 21, 0),
+                                35455L,
+                                1L),
+                        new PriceResponseDto(
+                                35455L,
+                                1L,
+                                1L,
+                                LocalDateTime.of(2020, 6, 14, 0, 0, 0),
+                                LocalDateTime.of(2020, 12, 31, 23, 59, 59),
+                                new BigDecimal("35.50"),
+                                "EUR")
+                ),
+                new TestCase(
+                        new PriceRequestDto(
+                                LocalDateTime.of(2020, 6, 15, 10, 0),
+                                35455L,
+                                1L),
+                        new PriceResponseDto(
+                                35455L,
+                                1L,
+                                3L,
+                                LocalDateTime.of(2020, 6, 15, 0, 0, 0),
+                                LocalDateTime.of(2020, 6, 15, 11, 0, 0),
+                                new BigDecimal("30.50"),
+                                "EUR")
+                ),
+                new TestCase(
+                        new PriceRequestDto(
+                                LocalDateTime.of(2020, 6, 16, 21, 0),
+                                35455L,
+                                1L),
+                        new PriceResponseDto(
+                                35455L,
+                                1L,
+                                4L,
+                                LocalDateTime.of(2020, 6, 15, 16, 0, 0),
+                                LocalDateTime.of(2020, 12, 31, 23, 59, 59),
+                                new BigDecimal("38.95"),
                                 "EUR")
                 )
         );
