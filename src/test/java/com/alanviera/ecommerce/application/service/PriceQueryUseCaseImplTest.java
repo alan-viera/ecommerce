@@ -55,7 +55,7 @@ public class PriceQueryUseCaseImplTest {
         Optional<Price> result = priceQueryUseCase.getPrice(now, 1L, 1L);
 
         assertTrue(result.isPresent());
-        assertEquals((byte) 1, result.get().getPriority());
+        assertEquals(1, result.get().getPriority());
         assertEquals(new BigDecimal("30.00"), result.get().getPrice());
     }
 
@@ -65,8 +65,8 @@ public class PriceQueryUseCaseImplTest {
         LocalDateTime now = LocalDateTime.now();
 
         List<Price> prices = List.of(
-                new Price(1L, 1L, 1L, now, now.plusHours(1), (byte) 0, new BigDecimal("20.00"), "EUR"),
-                new Price(1L, 1L, 2L, now, now.plusHours(1), (byte) 1, new BigDecimal("30.00"), "EUR")
+                new Price(1L, 1L, 1L, now, now.plusHours(1), 0, new BigDecimal("20.00"), "EUR"),
+                new Price(1L, 1L, 2L, now, now.plusHours(1), 1, new BigDecimal("30.00"), "EUR")
         );
 
         when(priceRepositoryPort.findPricesByDateAndProductAndBrand(now, 1L, 1L)).thenReturn(prices);
@@ -74,7 +74,7 @@ public class PriceQueryUseCaseImplTest {
         Optional<Price> result = priceQueryUseCase.getPrice(now, 1L, 1L);
 
         assertTrue(result.isPresent());
-        assertEquals((byte) 1, result.get().getPriority());
+        assertEquals(1, result.get().getPriority());
         assertEquals(new BigDecimal("30.00"), result.get().getPrice());
     }
 }
