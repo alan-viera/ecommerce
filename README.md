@@ -7,6 +7,8 @@ This project is a Spring Boot application that implements a product pricing API 
 
 ## 1. Architecture: Hexagonal (Ports & Adapters)
 
+<img src="docs/images/hexagonal-diagram.svg" alt="Hexagonal Architecture Diagram" width="50%" height="50%"/>
+
 Most relevant packages include:
 - **domain:** Core business logic (Model, UseCases, Ports)
 - **application:** UseCase Implementations (e.g. PriceQueryUseCaseImpl)
