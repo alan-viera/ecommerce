@@ -14,7 +14,7 @@ public class Price {
     private final Long priceListId;
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
-    private final byte priority;
+    private final int priority;
     private final BigDecimal price;
     private final String currency;
 }
