@@ -22,6 +22,6 @@ public class PriceController {
     public ResponseEntity<PriceResponseDto> getPrice(@RequestBody PriceRequestDto requestDto) {
         return priceQueryUseCase.getPrice(requestDto.getDate(), requestDto.getProductId(), requestDto.getBrandId())
                 .map(price -> ResponseEntity.ok(PriceResponseDto.from(price)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.ok().build());
     }
 }
