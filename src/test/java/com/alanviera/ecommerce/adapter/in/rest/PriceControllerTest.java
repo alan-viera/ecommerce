@@ -35,6 +35,29 @@ public class PriceControllerTest {
     private PriceQueryUseCase priceQueryUseCase;
 
     @Test
+    @DisplayName("Should return empty response")
+    void getPrice_noResult() throws Exception {
+        PriceRequestDto requestDto = new PriceRequestDto(
+                LocalDateTime.of(2020, 6, 14, 15, 0),
+                35455L,
+                1L
+        );
+
+        when(priceQueryUseCase.getPrice(requestDto.getDate(), requestDto.getProductId(), requestDto.getBrandId()))
+                .thenReturn(Optional.empty());
+
+        MvcResult result = mockMvc.perform(post("/prices")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDto)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String responseBody = result.getResponse().getContentAsString();
+
+        assertThat(responseBody).isBlank();
+    }
+
+    @Test
     @DisplayName("Should return price when found")
     void getPrice_found() throws Exception {
         Long productId = 35455L;
