@@ -20,6 +20,8 @@ public class PriceController {
 
     @PostMapping
     public ResponseEntity<PriceResponseDto> getPrice(@RequestBody PriceRequestDto requestDto) {
-        return null;
+        return priceQueryUseCase.getPrice(requestDto.getDate(), requestDto.getProductId(), requestDto.getBrandId())
+                .map(price -> ResponseEntity.ok(PriceResponseDto.from(price)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

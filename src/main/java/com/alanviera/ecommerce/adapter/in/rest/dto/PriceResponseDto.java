@@ -1,5 +1,6 @@
 package com.alanviera.ecommerce.adapter.in.rest.dto;
 
+import com.alanviera.ecommerce.domain.model.Price;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,16 @@ public class PriceResponseDto {
     private LocalDateTime endDate;
     private BigDecimal price;
     private String currency;
+
+    public static PriceResponseDto from(Price price) {
+        return new PriceResponseDto(
+                price.getProductId(),
+                price.getBrandId(),
+                price.getPriceListId(),
+                price.getStartDate(),
+                price.getEndDate(),
+                price.getPrice(),
+                price.getCurrency()
+        );
+    }
 }
