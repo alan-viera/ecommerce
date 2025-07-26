@@ -1,6 +1,5 @@
 package com.alanviera.ecommerce.adapter.out.persistence;
 
-import com.alanviera.ecommerce.adapter.out.persistence.entity.PriceEntity;
 import com.alanviera.ecommerce.adapter.out.persistence.repository.PriceRepository;
 import com.alanviera.ecommerce.domain.model.Price;
 import org.junit.jupiter.api.DisplayName;
@@ -29,38 +28,10 @@ public class PriceRepositoryAdapterTest {
     @Test
     @DisplayName("Should return matching price entity between date range")
     void findPricesByDateAndProductAndBrand_matching() {
+        // Given
+        LocalDateTime queryDate = LocalDateTime.of(2020, 6, 14, 10, 0);
         Long productId = 35455L;
         Long brandId = 1L;
-        BigDecimal priceValue = new BigDecimal("35.50");
-
-        // Given
-        PriceEntity price1 = new PriceEntity();
-        price1.setBrandId(brandId);
-        price1.setStartDate(LocalDateTime.of(2020, 1, 1, 10, 0));
-        price1.setEndDate(LocalDateTime.of(2020, 1, 10, 10, 0));
-        price1.setPriceListId(1L);
-        price1.setProductId(productId);
-        price1.setPriority(1);
-        price1.setPrice(priceValue);
-        price1.setCurrency("EUR");
-        price1.setLastUpdate(LocalDateTime.of(2020, 1, 1, 10, 0));
-        price1.setLastUpdateBy("user1");
-        priceRepository.save(price1);
-
-        PriceEntity price2 = new PriceEntity();
-        price2.setBrandId(brandId);
-        price2.setStartDate(LocalDateTime.of(2020, 1, 11, 10, 0));
-        price2.setEndDate(LocalDateTime.of(2020, 1, 20, 10, 0));
-        price2.setPriceListId(2L);
-        price2.setProductId(productId);
-        price2.setPriority(1);
-        price2.setPrice(new BigDecimal("99.50"));
-        price2.setCurrency("EUR");
-        price2.setLastUpdate(LocalDateTime.of(2020, 1, 1, 10, 0));
-        price2.setLastUpdateBy("user1");
-        priceRepository.save(price2);
-
-        LocalDateTime queryDate = LocalDateTime.of(2020, 1, 5, 11, 0);
 
         // When
         List<Price> results = priceRepositoryAdapter.findPricesByDateAndProductAndBrand(
@@ -68,7 +39,8 @@ public class PriceRepositoryAdapterTest {
 
         // Then
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).getPrice()).isEqualByComparingTo(priceValue);
+        assertThat(results.get(0).getPrice()).isEqualByComparingTo(new BigDecimal("35.50"));
+        assertThat(results.get(0).getPriceListId()).isEqualTo(1L);
     }
 
     @Test
@@ -76,10 +48,12 @@ public class PriceRepositoryAdapterTest {
     void findPricesByDateAndProductAndBrand_noResult() {
         // Given
         LocalDateTime queryDate = LocalDateTime.of(2020, 6, 14, 10, 0);
+        Long productId = 9999L;
+        Long brandId = 99L;
 
         // When
         List<Price> results = priceRepositoryAdapter.findPricesByDateAndProductAndBrand(
-                queryDate, 9999L, 99L);
+                queryDate, productId, brandId);
 
         // Then
         assertThat(results).isEmpty();
