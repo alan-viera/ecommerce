@@ -1,4 +1,5 @@
 # ecommerce service
+by _Alan Viera_
 
 This project is a Spring Boot application that implements a product pricing API using **Hexagonal Architecture (Ports & Adapters)**. It exposes a REST endpoint for querying the price of a product at a specific date and brand context.
 
@@ -61,4 +62,38 @@ resources/db/
 
 ## 6. Run the App
 
+Start with default profile:
 `./gradlew bootRun --args='--spring.profiles.active=default'`
+
+Run only the integration tests (test cases from the challenge):
+`./gradlew test --tests com.alanviera.ecommerce.integration.PriceControllerIntegrationTest`
+
+Run all tests:
+`./gradlew test`
+
+## 7. Sample request
+
+Request:
+```
+POST /prices
+Content-Type: application/json
+
+{
+    "date": "2020-06-14T21:00:00",
+    "productId": 35455,
+    "brandId": 1
+}
+```
+
+Response:
+```
+{
+    "productId": 35455,
+    "brandId": 1,
+    "priceListId": 1,
+    "startDate": "2020-06-14T00:00:00",
+    "endDate": "2020-12-31T23:59:59",
+    "price": 35.50,
+    "currency": "EUR"
+}
+```
