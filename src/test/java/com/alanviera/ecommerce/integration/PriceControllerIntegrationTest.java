@@ -1,6 +1,5 @@
 package com.alanviera.ecommerce.integration;
 
-import com.alanviera.ecommerce.adapter.in.rest.dto.PriceRequestDto;
 import com.alanviera.ecommerce.adapter.in.rest.dto.PriceResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,7 +7,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -16,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -32,10 +30,9 @@ class PriceControllerIntegrationTest {
     static Stream<TestCase> providePriceScenarios() {
         return Stream.of(
                 new TestCase(
-                        new PriceRequestDto(
-                                LocalDateTime.of(2020, 6, 14, 10, 0),
-                                35455L,
-                                1L),
+                        LocalDateTime.of(2020, 6, 14, 10, 0),
+                        35455L,
+                        1L,
                         new PriceResponseDto(
                                 35455L,
                                 1L,
@@ -46,10 +43,9 @@ class PriceControllerIntegrationTest {
                                 "EUR")
                 ),
                 new TestCase(
-                        new PriceRequestDto(
-                                LocalDateTime.of(2020, 6, 14, 16, 0),
-                                35455L,
-                                1L),
+                        LocalDateTime.of(2020, 6, 14, 16, 0),
+                        35455L,
+                        1L,
                         new PriceResponseDto(
                                 35455L,
                                 1L,
@@ -60,10 +56,9 @@ class PriceControllerIntegrationTest {
                                 "EUR")
                 ),
                 new TestCase(
-                        new PriceRequestDto(
-                                LocalDateTime.of(2020, 6, 14, 21, 0),
-                                35455L,
-                                1L),
+                        LocalDateTime.of(2020, 6, 14, 21, 0),
+                        35455L,
+                        1L,
                         new PriceResponseDto(
                                 35455L,
                                 1L,
@@ -74,10 +69,9 @@ class PriceControllerIntegrationTest {
                                 "EUR")
                 ),
                 new TestCase(
-                        new PriceRequestDto(
-                                LocalDateTime.of(2020, 6, 15, 10, 0),
-                                35455L,
-                                1L),
+                        LocalDateTime.of(2020, 6, 15, 10, 0),
+                        35455L,
+                        1L,
                         new PriceResponseDto(
                                 35455L,
                                 1L,
@@ -88,10 +82,9 @@ class PriceControllerIntegrationTest {
                                 "EUR")
                 ),
                 new TestCase(
-                        new PriceRequestDto(
-                                LocalDateTime.of(2020, 6, 16, 21, 0),
-                                35455L,
-                                1L),
+                        LocalDateTime.of(2020, 6, 16, 21, 0),
+                        35455L,
+                        1L,
                         new PriceResponseDto(
                                 35455L,
                                 1L,
@@ -107,9 +100,10 @@ class PriceControllerIntegrationTest {
     @ParameterizedTest
     @MethodSource("providePriceScenarios")
     void getPrice_responses(TestCase testCase) throws Exception {
-        String jsonResponse = mockMvc.perform(post("/prices")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(testCase.input)))
+        String jsonResponse = mockMvc.perform(get("/prices")
+                        .param("date", testCase.date.toString())
+                        .param("productId", testCase.productId.toString())
+                        .param("brandId", testCase.brandId.toString()))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -120,11 +114,15 @@ class PriceControllerIntegrationTest {
     }
 
     private static class TestCase {
-        final PriceRequestDto input;
+        final LocalDateTime date;
+        final Long productId;
+        final Long brandId;
         final PriceResponseDto expected;
 
-        TestCase(PriceRequestDto input, PriceResponseDto expected) {
-            this.input = input;
+        TestCase(LocalDateTime date, Long productId, Long brandId, PriceResponseDto expected) {
+            this.date = date;
+            this.productId = productId;
+            this.brandId = brandId;
             this.expected = expected;
         }
     }
