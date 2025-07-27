@@ -60,8 +60,8 @@ The project also includes:
 
 resources/db/
 - migration/V1__init_schema.sql
+- data/real_data_prices.csv
 - data/test_data_prices.csv
-- data/load_prices.sql
 
 ## 5. Testing
 
@@ -92,14 +92,7 @@ http://localhost:8080/swagger-ui/index.html
 
 Request:
 ```
-POST /prices
-Content-Type: application/json
-
-{
-    "date": "2020-06-14T21:00:00",
-    "productId": 35455,
-    "brandId": 1
-}
+GET /price?date=2020-06-14T21%3A00%3A00&productId=35455&brandId=1
 ```
 
 Response:
