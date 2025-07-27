@@ -100,7 +100,7 @@ class PriceControllerIntegrationTest {
     @ParameterizedTest
     @MethodSource("providePriceScenarios")
     void getPrice_responses(TestCase testCase) throws Exception {
-        String jsonResponse = mockMvc.perform(get("/prices")
+        String jsonResponse = mockMvc.perform(get("/price")
                         .param("date", testCase.date.toString())
                         .param("productId", testCase.productId.toString())
                         .param("brandId", testCase.brandId.toString()))

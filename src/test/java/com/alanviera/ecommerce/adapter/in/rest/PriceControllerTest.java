@@ -43,7 +43,7 @@ public class PriceControllerTest {
         when(priceQueryUseCase.getPrice(date, productId, brandId))
                 .thenReturn(Optional.empty());
 
-        MvcResult result = mockMvc.perform(get("/prices")
+        MvcResult result = mockMvc.perform(get("/price")
                         .param("date", date.toString())
                         .param("productId", productId.toString())
                         .param("brandId", brandId.toString()))
@@ -73,7 +73,7 @@ public class PriceControllerTest {
         when(priceQueryUseCase.getPrice(date, productId, brandId))
                 .thenReturn(Optional.of(price));
 
-        MvcResult result = mockMvc.perform(get("/prices")
+        MvcResult result = mockMvc.perform(get("/price")
                         .param("date", date.toString())
                         .param("productId", productId.toString())
                         .param("brandId", brandId.toString()))
