@@ -3,6 +3,7 @@ package com.alanviera.ecommerce.adapter.in.rest;
 import com.alanviera.ecommerce.adapter.in.rest.dto.PriceRequestDto;
 import com.alanviera.ecommerce.adapter.in.rest.dto.PriceResponseDto;
 import com.alanviera.ecommerce.domain.port.in.PriceQueryUseCase;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class PriceController {
     }
 
     @PostMapping
-    public ResponseEntity<PriceResponseDto> getPrice(@RequestBody PriceRequestDto requestDto) {
+    public ResponseEntity<PriceResponseDto> getPrice(@Valid @RequestBody PriceRequestDto requestDto) {
         return priceQueryUseCase.getPrice(requestDto.getDate(), requestDto.getProductId(), requestDto.getBrandId())
                 .map(price -> ResponseEntity.ok(PriceResponseDto.from(price)))
                 .orElseGet(() -> ResponseEntity.ok().build());
