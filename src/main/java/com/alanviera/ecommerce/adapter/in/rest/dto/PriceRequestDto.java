@@ -1,6 +1,7 @@
 package com.alanviera.ecommerce.adapter.in.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PriceRequestDto {
     @NotNull
+    @Schema(type = "string", pattern = "yyyy-MM-dd'T'HH:mm:ss", example = "2020-06-14T21:00:00")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime date;
 
